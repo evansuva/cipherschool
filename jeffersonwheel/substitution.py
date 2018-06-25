@@ -16,7 +16,7 @@ import random
 # We use the uppercase English letters, ABC...Z, as our alphabet.
 ALPHABET = [chr(ch + ord('A')) for ch in range(26)] 
 
-def generate_key(alphabet = ALPHABET): 
+def generate_key(alphabet=ALPHABET): 
     """
     Generates a key for a monoalphabetic substitution cipher, which is a
     random permutation of the letters in the alphabet.

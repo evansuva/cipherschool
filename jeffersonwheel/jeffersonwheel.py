@@ -25,7 +25,7 @@ def generate_wheels(num):
         wheels.append(generate_key())
     return wheels
     
-def wheel_encrypt(wheels, msg, offset = None):
+def wheel_encrypt(wheels, msg, offset=None):
     """
     Returns the encryption of one block of a message using the input wheels.
     The optional parameter offest gives the row to select; if not provided,
