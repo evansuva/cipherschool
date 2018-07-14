@@ -6,6 +6,10 @@
 # 14 June 2018
 #
 
+### python3 visualcrypto.py --seed 1629 --xsize 80 --image message.bmp
+### convert message-share.svg message-share.pdf
+### print scale to 64%
+
 ### This requires the svgwrite and PIL modules are installed. 
 ### If they are not already installed, you should be able to
 ###  install them by running:
@@ -93,8 +97,10 @@ def draw_matrix(svgdoc, m, width, height, plain=False, encoding=draw_encoding):
     yblock = xblock # keep the blocks square (don't use full height if necessary)
     # print("xblock = " + str(xblock) + " columns = " + str(columns))
     # print("size: " + str(xblock * columns) + " / " + str(width))
-    for rindex in range(len(m)):
-        for cindex in range(len(m[rindex])):
+    # print("size: " + str(yblock * rows) + " / " + str(height))
+
+    for rindex in range(rows):
+        for cindex in range(columns):
             if plain:
                 draw_block(svgdoc, cindex, rindex, xblock, yblock, 
                            color = "rgb(0,0,0)" if m[rindex][cindex] else "rgb(255,255,255)")
@@ -146,12 +152,16 @@ def generate_key(width, height):
     keymat = [[key[(r * width + c)] for c in range(width)] for r in range(height)]
     return keymat
 
-def generate_image(keymat, image, width, height, outputdir="./", colored=True):
-    print("Image size: " + str(width) + ", " + str(height))
+def generate_image(keymat, image, width, height, outputdir="./", colored=False):
+    # print("Image size: " + str(width) + ", " + str(height))
     
     print ("Processing image: " + image.name + "...")
     imgname = image.name
     image = Image.open(imgname).convert('1')
+    iwidth, iheight = image.size
+    if iwidth > iheight:
+        print("Rotating image (" + str(iwidth) + ", " + str(iheight) + ")")
+        image = image.rotate(90, expand=True) # make landscape orientation
     image = image.resize((width, height)) # , resample=0)
 
     ext = imgname.find('.bmp')
@@ -159,12 +169,13 @@ def generate_image(keymat, image, width, height, outputdir="./", colored=True):
     ifname = imgname[:ext]
 
     iwidth, iheight = image.size
-    print ("iwidth, iheight: " + str(iwidth) + ", " + str(iheight))
+    assert iheight >= iwidth
+    # print ("iwidth, iheight: " + str(iwidth) + "/" + str(width) + ", " + str(iheight) + "/" + str(height))
     assert iwidth <= width
     assert iheight <= height
 
-    imgmat = [[1 if c < iwidth and r < iheight and image.getpixel((c, r)) > 128 
-               else 0 for c in range(width)] 
+    imgmat = [[0 if c < iwidth and r < iheight and image.getpixel((c, r)) > 128 
+               else 1 for c in range(width)] 
               for r in range(height)]
 
     bmat = [[xor(imgmat[r][c], keymat[r][c]) for c in range(width)] for r in range(height)]
@@ -181,6 +192,12 @@ def generate_image(keymat, image, width, height, outputdir="./", colored=True):
 
     draw_matrix(svgb, bmat, xsize, ysize, encoding=triangle_encoding)
     svgb.save()
+
+    svgimg = svgwrite.Drawing(filename = ifname + "-both.svg",
+                              size = (str(xsize) + "px", str(ysize) + "px"))
+    draw_both(svgimg, keymat, bmat, xsize, ysize, plain=True, encoding=triangle_encoding)
+    svgimg.save()
+
 
 if __name__ == "__main__":    
     from argparse import ArgumentParser
@@ -203,7 +220,7 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--colored", dest = "colored",
                         help="use a background color",
                         type = bool,
-                        default = True)
+                        default = False)
 
     parser.add_argument("-q", "--quiet",
                         action="store_false", dest="verbose", default=True,

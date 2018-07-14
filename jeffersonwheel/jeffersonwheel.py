@@ -25,6 +25,16 @@ def generate_wheels(num):
         wheels.append(generate_key())
     return wheels
     
+
+def read_wheels(wname):
+    import csv
+    wheels = []
+    with open(wname, encoding='ISO-8859-1') as csvfile:
+        wreader = csv.reader(csvfile, delimiter=',')
+        for row in wreader:
+            wheels.append(row)
+    return wheels
+
 def wheel_encrypt(wheels, msg, offset=None):
     """
     Returns the encryption of one block of a message using the input wheels.
@@ -56,16 +66,24 @@ def wheel_decrypt(wheels, ciphertext):
     return msgs
 
 if __name__ == "__main__":    
-    wheels = generate_wheels(20)
+    ## wheels = generate_wheels(20)
+    wheels = read_wheels('wheels-used.csv')
+    # reverse
+    wheels = [wheels[len(wheels) - windex - 1] for windex in range(len(wheels))]
     # this prints vertically
     for wheel in wheels:
         print (','.join([c for c in wheel]))
 
     msg = "TOOMANYSECRETS"
+    msg = "ANYADORIELLIE"
+
     assert wheel_encrypt(wheels, msg, offset=0) == msg
     # encrypting with the inverse offset decrypts
     assert wheel_encrypt(wheels, wheel_encrypt(wheels, msg, offset=3), offset = -3) == msg
+    print (wheel_encrypt(wheels, msg, offset=3))
 
-    ciphertext = wheel_encrypt(wheels, msg)
+    # ciphertext = wheel_encrypt(wheels, msg)
+    ciphertext = "TPUFDVRUUPQFDV" # 
+    ciphertext = "VDFQPUURVDFUPT"
     msgs = wheel_decrypt(wheels, ciphertext)
     print ('\n'.join(msgs))
