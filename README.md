@@ -21,3 +21,6 @@ fit around a water bottle to make a model wheel cipher machine.
 
 ## Visual Cryptography and Perfect Ciphers
 
+[`visualcrypto/explanation.pptx`](https://github.com/evansuva/cipherschool/blob/master/visualcrypto/explanation.pptx) - shows the two different ways to encode each bit.  
+
+[`visualcrypto/visualcrypto.py`](https://github.com/evansuva/cipherschool/blob/master/visualcrypto/visualcrypto.py) - Python code for generating keys and transparencies. See the comments in the code for how to use.
