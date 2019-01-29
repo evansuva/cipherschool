@@ -6,9 +6,11 @@ students, developed for [Cyberwars at UVA Camp
 
 ## Secure Multi-Party Computation for Muggles
 
+[Lesson Plan](https://docs.google.com/document/d/17ow-6ibjYDAoMUI2DhpubbPZkm4ydROpkzoTYBbZlwE/edit?usp=sharing)
+
 ## Jefferson's Wheel Cypher
 
-[LINK TO SLIDES and LESSON PLAN]
+[Lesson Plan](https://docs.google.com/document/d/1EuMlcTyZvq-OoRJaxfFo0rqyIUjaha6NPpyYeK4XD3g/edit?usp=sharing)
 
 `jeffersonwheel/substitution.py` - simple monoalphabetic substitution cipher  
 `jeffersonwheel/jeffersonwheel.py` - code for Jefferson's Wheel Cypher
@@ -19,4 +21,3 @@ fit around a water bottle to make a model wheel cipher machine.
 
 ## Visual Cryptography and Perfect Ciphers
 
-[LINK TO SLIDES and Lesson Plan]
