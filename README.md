@@ -12,7 +12,7 @@ students, developed for [Cyberwars at UVA Camp
 
 [Lesson Plan](https://docs.google.com/document/d/1EuMlcTyZvq-OoRJaxfFo0rqyIUjaha6NPpyYeK4XD3g/edit?usp=sharing)
 
-Introduction to Cryptography: [Annotated Slides (PPTX)](https://www.dropbox.com/s/pey81ah1myykgj2/cryptointro-annotated.pptx?dl=0)
+Introduction to Cryptography: [Slides (PPTX)](https://www.dropbox.com/s/pey81ah1myykgj2/cryptointro-annotated.pptx?dl=0)
 
 [`jeffersonwheel/substitution.py`](https://github.com/evansuva/cipherschool/blob/master/jeffersonwheel/substitution.py) - simple monoalphabetic substitution cipher  
 [`jeffersonwheel/jeffersonwheel.py`](https://github.com/evansuva/cipherschool/blob/master/jeffersonwheel/jeffersonwheel.py) - code for Jefferson's Wheel Cypher
